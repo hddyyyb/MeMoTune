@@ -1,0 +1,21 @@
+CUDA_VISIBLE_DEVICES=0 python train_gsm8k.py \
+    --model_name_or_path ../lowbit_file/Llama-2-7b-hf-4bit-64rank \
+    --learning_rate 3e-4 \
+    --seed 17 \
+    --rank 64 \
+    --expt_name llama2_7b_64rank_gsm8k \
+    --output_dir ./output \
+    --num_train_epochs 4 \
+    --max_steps 1880 \
+    --per_device_train_batch_size 2 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy steps \
+    --save_strategy steps \
+    --weight_decay 0.1 \
+    --save_total_limit 3 \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1000 \
+    --do_train \
+    --report_to tensorboard
+
