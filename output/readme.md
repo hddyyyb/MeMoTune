@@ -1,1 +1,1 @@
-This path stores the base models and adapters.
+This path stores the quantized base models and generated adapters.
