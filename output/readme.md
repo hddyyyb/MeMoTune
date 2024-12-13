@@ -1,1 +1,1 @@
-This path stores the trained model
+This path stores the base models and adapters.
