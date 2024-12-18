@@ -25,3 +25,33 @@ For specific parameter configurations, please refer to the paper.
 4. Run train_glue_llmm.sh to train DeBERTaV3-base on GLUE.
 
 scale size $s$ of 2&3 is configured at ./src/loramodel.py, while for 4, it is set in ./utils_llmm.py 
+
+
+# Environment
+The following dependencies are required to run the project:  
+- **Python**: 3.10  
+- **CUDA Toolkit**: 11.8  
+- **Transformers**: 4.41.2  
+- **PyTorch**: 2.1.2+cu118  
+- **PEFT**: Latest version  
+- **TensorFlow-GPU**: 2.14.0  
+- **cuDNN**: 8.9.2.26  
+
+# Parameter Distribution Training
+The parameter distribution training files are located in `./src` and will replace the corresponding library files.  
+
+### Implementation
+The parameter distribution update method is implemented in:  
+- `./src/loramodel.py`  
+- `./src/loralayer.py`  
+
+For detailed parameter configurations, refer to the paper.
+
+# Quick Start
+Follow these steps to set up and run the training process:  
+
+1. **Generate Quantized Models**  
+   Run the initialization script:  
+   ```bash
+   bash _init.sh
+
