@@ -32,10 +32,10 @@ For specific parameter configurations, please refer to the paper.
 ### Training Steps
 
 1. **Generate Quantized Models**:  
-   Run '_init.sh' to generate quantized models.
-   ```bash
-   bash _init.sh
-   ```
+   Run ```bash
+   _init.sh
+   ``` to generate quantized models.
+   
 
 2. **Train Llama and Llama2 on Alpaca and Hh-rlhf Datasets**:  
    Run train_nlg_llama.sh to train Llama and Llama2 on dataset Alpaca and Hh-rlhf. 
