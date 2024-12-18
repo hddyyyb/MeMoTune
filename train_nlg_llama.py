@@ -161,8 +161,6 @@ class TrainingArguments(transformers.Seq2SeqTrainingArguments):
         metadata={"help":"Lora dropout."}
     )
 
-    tau_lambda: float = field(default=0.1)
-    tau_n: int = field(default=100)
     blocksize2: int = field(default=256)
 
     max_memory_MB: int = field(
