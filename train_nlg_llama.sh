@@ -28,8 +28,6 @@ CUDA_VISIBLE_DEVICES=5 python train_nlg_llama.py \
     --eval_dataset_size 1024 \
     --max_eval_samples 40000 \
     --optim paged_adamw_32bit \
-    --tau_lambda 0.2 \
-    --tau_n 100 \
     --learning_rate 0.01 \
     --weight_decay 5e-5 \
     --blocksize2 256
