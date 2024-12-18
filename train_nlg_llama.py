@@ -54,6 +54,14 @@ class ModelArguments:
         default=False,
         metadata={"help": "Enables using Huggingface auth token from Git Credentials."}
     )
+    scale: int = field(
+        default=100,
+        metadata={"help": "Scale size."},
+    )
+    K: int = field(
+        default=1,
+        metadata={"help": "K."},
+    )
 
 @dataclass
 class DataArguments:
@@ -568,7 +576,7 @@ def get_accelerate_model(args, checkpoint_dir):
             model = PeftModel.from_pretrained(
                 model,
                 args.model_name_or_path,
-                subfolder="loftq_init",
+                subfolder="llmm_init",
                 is_trainable=True,
             )
     model.print_trainable_parameters()
@@ -678,6 +686,9 @@ def train():
     args = argparse.Namespace(
         **vars(model_args), **vars(data_args), **vars(training_args)
     )
+    import src.loramodel
+    src.loramodel.sdpscale = args.scale
+    src.loramodel.sdpK = args.K
     modelname = str(args.model_name_or_path).replace('/','_')
     checkpoint_dir = None
     model, tokenizer = get_accelerate_model(args, checkpoint_dir) 

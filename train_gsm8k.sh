@@ -1,8 +1,10 @@
-CUDA_VISIBLE_DEVICES=0 python train_gsm8k.py \
+CUDA_VISIBLE_DEVICES=5 python train_gsm8k.py \
     --model_name_or_path ../lowbit_file/Llama-2-7b-hf-4bit-64rank \
     --learning_rate 3e-4 \
     --seed 17 \
     --rank 64 \
+    --scale 700 \
+    --K 2 \
     --expt_name llama2_7b_64rank_gsm8k \
     --output_dir ./output \
     --num_train_epochs 4 \

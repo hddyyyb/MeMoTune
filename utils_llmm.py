@@ -4,8 +4,8 @@ import random
 from torch import nn
 from utils_qaunt import weight_quant_fn
 import torch.nn.functional as F
-K=1
-llmmscale=600
+K=None
+llmmscale=None
 
 
 

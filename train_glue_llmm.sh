@@ -1,9 +1,9 @@
-export TASK_NAME=cola
-export INT_BIT=2
-export LR=5e-5
+export TASK_NAME=stsb
+export INT_BIT=4
+export LR=1e-4
 export LowRatio=8
 export Seeds=11
-CUDA_VISIBLE_DEVICES=1 python train_glue_llmm.py \
+CUDA_VISIBLE_DEVICES=2 python train_glue_llmm.py \
   --model_name_or_path microsoft/deberta-v3-base \
   --task_name $TASK_NAME \
   --max_length 128 \
@@ -11,8 +11,10 @@ CUDA_VISIBLE_DEVICES=1 python train_glue_llmm.py \
   --per_device_eval_batch_size 16 \
   --num_train_epochs 60 \
   --learning_rate $LR \
-  --output_dir ./output/cola001 \
+  --output_dir ./output/stsb012 \
   --int_bit $INT_BIT \
+  --scale 700 \
+  --K 1 \
   --seed $Seeds \
   --loftq \
   --reduced_rank 32 \

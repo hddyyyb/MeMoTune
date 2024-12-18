@@ -211,8 +211,12 @@ def parse_args():
     parser.add_argument("--quant_embedding", action="store_true", help="whether quantize embeddings")
     parser.add_argument("--quant_method", type = str, default="uniform", help="quantization method used")
     parser.add_argument("--num_iter", type = int, default="5", help="The number of iterations")
+    parser.add_argument("--scale", type = int, default="100", help="Scale size")
+    parser.add_argument("--K", type = int, default="1", help="K")
     parser.add_argument("--eval", action="store_true", help="whether doing evaluation")
     args = parser.parse_args()
+
+
 
     if args.task_name is None and args.train_file is None and args.validation_file is None:
         raise ValueError("Need either a task name or a training/validation file.")
@@ -232,6 +236,9 @@ def parse_args():
 
 def main():
     args = parse_args()
+    import utils_llmm
+    utils_llmm.llmmscale = args.scale
+    utils_llmm.K = args.K
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",

@@ -4,11 +4,14 @@ CUDA_VISIBLE_DEVICES=5 python train_nlg_llama.py \
     --dataset alpaca \
     --do_train True \
     --do_eval True \
+    --scale 700 \
     --double_quant False \
     --num_train_epochs 10 \
     --do_mmlu_eval False \
     --source_max_len 384 \
     --target_max_len 128 \
+    --scale 700 \
+    --K 2 \
     --lora_r 16 \
     --per_device_train_batch_size 1 \
     --per_device_eval_batch_size 1 \

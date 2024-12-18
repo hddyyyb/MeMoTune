@@ -103,6 +103,12 @@ def arg_parse():
         help="The quantized bits",
     )
     parser.add_argument(
+        "--K",
+        type=int,
+        default=1,
+        help="K",
+    )
+    parser.add_argument(
         "--iter",
         type=int,
         default=1,
@@ -126,6 +132,8 @@ def arg_parse():
 
 def quantize_and_save():
     args = arg_parse()
+    import src.loramodel
+    src.loramodel.sdpK = args.K
     tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, token=args.token, trust_remote_code=True)
     if any(name in args.model_name_or_path.lower() for name in ["llama", "mistral", "falcon"]):
         model = AutoModelForCausalLM.from_pretrained(
@@ -171,7 +179,7 @@ def quantize_and_save():
     base_model = lora_model.get_base_model()
     model_name = args.model_name_or_path.split("/")[-1] + f"-{args.bits}bit" + f"-{args.rank}rank"
     base_model_dir = os.path.join(args.save_dir, model_name)
-    lora_model_dir = os.path.join(args.save_dir, model_name, "loftq_init")
+    lora_model_dir = os.path.join(args.save_dir, model_name, "llmm_init")
 
     lora_model.save_pretrained(lora_model_dir)
 

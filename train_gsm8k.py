@@ -62,6 +62,15 @@ class ModelArguments:
         default=None,
         metadata={"help": "HF token to access to private models, e.g., meta-llama"},
     )
+    scale: int = field(
+        default=100,
+        metadata={"help": "Scale size."},
+    )
+    K: int = field(
+        default=1,
+        metadata={"help": "K."},
+    )
+    
 
 
 @dataclass
@@ -290,6 +299,9 @@ def train():
     args = argparse.Namespace(
         **vars(model_args), **vars(data_args), **vars(training_args)
     )
+    import src.loramodel
+    src.loramodel.sdpscale = args.scale
+    src.loramodel.sdpK = args.K
     if model_args.full_precision:
         model = transformers.AutoModelForCausalLM.from_pretrained(
             model_args.model_name_or_path,
@@ -364,7 +376,7 @@ def train():
         model = PeftModel.from_pretrained(
             model,
             model_args.model_name_or_path,
-            subfolder='loftq_init',
+            subfolder='llmm_init',
             is_trainable=True,
             token=model_args.token,
         )
