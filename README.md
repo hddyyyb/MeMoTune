@@ -35,34 +35,14 @@ For specific parameter configurations, please refer to the paper.
    Run `_init.sh` to generate quantized models.
    
 2. **Train Llama and Llama2 on Alpaca and Hh-rlhf Datasets**:  
-   Run train_nlg_llama.sh to train Llama and Llama2 on dataset Alpaca and Hh-rlhf. 
-   ```bash
-   bash train_nlg_llama.sh
-   ```
+   Run `train_nlg_llama.sh` to train Llama and Llama2 on dataset Alpaca and Hh-rlhf. 
 
 3. **Train and Evaluate Llama2 on gsm8k Dataset**:  
-   Run train_gsm8k.sh to train Llama2 on dataset gsm8k, and run test_gsm8k.sh to evaluate the trained models. 
-   - To train: 
-     ```bash
-     bash train_gsm8k.sh
-     ```
-     Run train_glue_llmm.sh to train DeBERTaV3-base on GLUE.
-   - To evaluate:
-     ```bash
-     bash test_gsm8k.sh
-     ```
+   Run `train_gsm8k.sh` to train Llama2 on dataset gsm8k, and run `test_gsm8k.sh` to evaluate the trained models. 
 
-5. **Train DeBERTaV3-base on GLUE**:  
-   scale size $s$ of 2&3 is configured at ./src/loramodel.py, while for 4, it is set in ./utils_llmm.py
-   ```bash
-   bash train_glue_llmm.sh
-   ```
+4. **Train DeBERTaV3-base on GLUE**:
+   Run `train_glue_llmm.sh` to train DeBERTaV3-base on GLUE.
 
-
-### Scale Size Configuration
-
-- **Steps 2 & 3**: Scale size `$s` is configured in `./src/loramodel.py`.
-- **Step 4**: Scale size is set in `./utils_llmm.py`.
 
 ---
 
