@@ -41,4 +41,4 @@ For specific parameter configurations, please refer to the paper.
    | uniform      | 16   | mrpc    | 1e-4          | 700       | 60    | 1    |
    | uniform      | 16   | stsb    | 5e-5          | 300       | 60    | 1    |
 
-    (llmmscale of 2&3 is configured at ./src/loramodel.py, while for 4, it is set in ./utils_llmm.py)
+scale size $s$ of 2&3 is configured at ./src/loramodel.py, while for 4, it is set in ./utils_llmm.py 
