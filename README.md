@@ -1,6 +1,28 @@
+## Environment
+- **Python**: 3.10  
+- **CUDA Toolkit**: 11.8  
+- **Transformers**: 4.41.2  
+- **PyTorch**: 2.1.2+cu118  
+- **PEFT**: latest version  
+- **TensorFlow-GPU**: 2.14.0  
+- **cuDNN**: 8.9.2.26  
+
+## Parameter Distribution Training
+The parameter distribution training files are located in `./src` and will overwrite the corresponding library files.  
+
+The proposed parameter distribution update method is primarily implemented in:  
+- `./src/loramodel.py`  
+- `./src/loralayer.py`  
+
+For specific parameter configurations, please refer to the paper.
+
+
+
 envirenment: python==3.10,cudatoolkit==11.8,transformers==4.41.2,torch==2.1.2+cu118,peft,tensorflow-gpu==2.14.0,cudnn==8.9.2.26
 
 The parameter distribution training files are located in ./src and will replace the corresponding library files. The proposed parameter distribution update method is primarily implemented in ./src/loramodel.py and ./src/loralayer.py.
+
+The specific parameter configuration is described in the paper.
 
 1. Run _init.sh to generate quantized models.
 
