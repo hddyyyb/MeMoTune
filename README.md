@@ -40,7 +40,7 @@ For specific parameter configurations, please refer to the paper.
 3. **Train and Evaluate Llama2 on gsm8k Dataset**:  
    Run `train_gsm8k.sh` to train Llama2 on dataset gsm8k, and run `test_gsm8k.sh` to evaluate the trained models. 
 
-4. **Train DeBERTaV3-base on GLUE**:
+4. **Train DeBERTaV3-base on GLUE**:  
    Run `train_glue_llmm.sh` to train DeBERTaV3-base on GLUE.
 
 
