@@ -24,21 +24,4 @@ For specific parameter configurations, please refer to the paper.
 
 4. Run train_glue_llmm.sh to train DeBERTaV3-base on GLUE.
 
-   The hyperparameters that need to be modified are as follows: 
-
-   | quant        | rank | dataset | learning rate | llmmscale | epoch | K    |
-   | ------------ | ---- | ------- | ------------- | --------- | ----- | ---- |
-   | normal_float | 32   | cola    | 5e-5          | 600       | 60    | 1    |
-   | normal_float | 32   | mrpc    | 1e-4          | 600       | 60    | 1    |
-   | normal_float | 32   | stsb    | 1e-4          | 700       | 60    | 1    |
-   | normal_float | 16   | cola    | 1e-4          | 1000      | 60    | 1    |
-   | normal_float | 16   | mrpc    | 1e-4          | 500       | 60    | 1    |
-   | normal_float | 16   | stsb    | 1e-4          | 700       | 60    | 1    |
-   | uniform      | 32   | cola    | 1e-4          | 4000      | 60    | 1    |
-   | uniform      | 32   | mrpc    | 1e-4          | 100       | 60    | 1    |
-   | uniform      | 32   | stsb    | 5e-5          | 300       | 60    | 1    |
-   | uniform      | 16   | cola    | 1e-4          | 1000      | 60    | 2    |
-   | uniform      | 16   | mrpc    | 1e-4          | 700       | 60    | 1    |
-   | uniform      | 16   | stsb    | 5e-5          | 300       | 60    | 1    |
-
 scale size $s$ of 2&3 is configured at ./src/loramodel.py, while for 4, it is set in ./utils_llmm.py 
