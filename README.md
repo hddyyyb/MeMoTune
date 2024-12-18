@@ -15,28 +15,12 @@ The proposed parameter distribution update method is primarily implemented in:
 - `./src/loralayer.py`  
 
 For specific parameter configurations, please refer to the paper.
-
-
-
-envirenment: python==3.10,cudatoolkit==11.8,transformers==4.41.2,torch==2.1.2+cu118,peft,tensorflow-gpu==2.14.0,cudnn==8.9.2.26
-
-The parameter distribution training files are located in ./src and will replace the corresponding library files. The proposed parameter distribution update method is primarily implemented in ./src/loramodel.py and ./src/loralayer.py.
-
-The specific parameter configuration is described in the paper.
-
+ 
 1. Run _init.sh to generate quantized models.
 
 2. Run train_nlg_llama.sh to train Llama and Llama2 on dataset Alpaca and Hh-rlhf. 
 
-   | learning rate | llmmscale | max_steps | K    |
-   | ------------- | --------- | --------- | ---- |
-   | 1e-2          | 400       | 30000     | 2    |
-
 3. Run train_gsm8k.sh to train Llama2 on dataset gsm8k, and run test_gsm8k.sh to evaluate the trained models. 
-
-   | learning rate | llmmscale | max_steps | K    |
-   | ------------- | --------- | --------- | ---- |
-   | 3e-4          | 400       | 1880      | 2    |
 
 4. Run train_glue_llmm.sh to train DeBERTaV3-base on GLUE.
 
