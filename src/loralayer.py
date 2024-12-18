@@ -128,11 +128,11 @@ class BinarizeConv2dSDP(nn.Module):
 
 
 class SDP(Function):
+    # Training parameter distribution
     @staticmethod
     def forward(ctx, m, z, sample, scale, K, training=True):
         rv = torch.normal(0.0, 1.0/np.sqrt(scale.item()), size=(1, K.item())).cuda()
         zz = torch.mm(rv, z)
-
         w = zz + m
         grad_scaling = np.sqrt(scale)
         ctx.save_for_backward(K, sample, rv, grad_scaling)
@@ -229,7 +229,7 @@ class LoraLayer(BaseTunerLayer):
     ):  
         # This code works for linear layers, override for other layer types
 
-        self.K = K  # 1
+        self.K = K  
         self.scale = scale 
         
         self.number_of_weightsA = self.in_features * r  
