@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datasets import Dataset, load_dataset, load_from_disk
+from datasets import Dataset, load_dataset
 from os.path import exists, join, isdir
 from packaging import version
 from packaging.version import parse
