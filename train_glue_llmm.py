@@ -1,4 +1,3 @@
-# coding=utf-8
 # Copyright 2021 The HuggingFace Inc. team. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-""" Finetuning a 🤗 Transformers model for sequence classification on GLUE."""
 import argparse
 import json
 import logging
@@ -237,8 +235,8 @@ def parse_args():
 def main():
     args = parse_args()
     import utils_llmm
-    utils_llmm.llmmscale = args.scale
-    utils_llmm.K = args.K
+    utils_llmm.Llmm_scale = args.scale
+    utils_llmm.Llmm_K = args.K
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S",

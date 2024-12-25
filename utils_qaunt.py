@@ -11,7 +11,6 @@ def weight_quant_fn(weight,  num_bits, quant_method, num_std = 2):
         raise ValueError("")
 
 
-#The default choice of normal float quantization is asymmetric. We follow the default setting of qlora that we use asymmetric normal float with block size 64
 from scipy.stats import norm
 def create_normal_map(offset=0.9677083, symmetric=False, num_bits = 4):
     variations = 2**num_bits
@@ -32,7 +31,6 @@ def create_normal_map(offset=0.9677083, symmetric=False, num_bits = 4):
     values = values.sort().values
     values /= values.max()
     return values
-    # assert values.
 
 def quantize_tensor(X, L):
     X_expanded = X.unsqueeze(-1)
@@ -66,8 +64,8 @@ def quant_uniform(input, num_bits=2, clip_val = None):
         input = torch.where(input > clip_val[0], input, clip_val[0])
     alpha = (input.max() - input.min()).detach()
     beta = input.min().detach()
-    input_normalized = (input - beta) / (alpha + 1e-8)  # map to 0 to 1
+    input_normalized = (input - beta) / (alpha + 1e-8) 
     s = (2 ** num_bits - 1)
-    quant_input = torch.round(input_normalized * s).div(s)  # map to int between 0 and s(2**num_bits-1)
-    output = quant_input * (alpha + 1e-8) + beta  #
+    quant_input = torch.round(input_normalized * s).div(s)
+    output = quant_input * (alpha + 1e-8) + beta  
     return output

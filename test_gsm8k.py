@@ -1,5 +1,3 @@
-#    Copyright 2023 Rohan Taori, Ishaan Gulrajani, Tianyi Zhang, Yann Dubois, Xuechen Li
-#
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
 #    You may obtain a copy of the License at
@@ -58,6 +56,15 @@ class ModelArguments:
         default=512,
         metadata={"help": "Maximum sequence length. Sequences will be left padded (and possibly truncated)."},
     )
+    scale: int = field(
+        default=100,
+        metadata={"help": "Scale size."},
+    )
+    K: int = field(
+        default=1,
+        metadata={"help": "K."},
+    )
+    
 
 
 @dataclass
@@ -262,6 +269,9 @@ if __name__ == "__main__":
 
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments))
     model_args, data_args = parser.parse_args_into_dataclasses()
+    import src.loramodel
+    src.loramodel.Llmm_scale = model_args.scale
+    src.loramodel.Llmm_K = model_args.K
     if model_args.ckpt_dir is not None:
         adapter_dir_list = [os.path.join(model_args.ckpt_dir, ckpt_dir) for ckpt_dir in os.listdir(model_args.ckpt_dir)
                             if 'checkpoint-' in ckpt_dir]

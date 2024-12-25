@@ -13,11 +13,11 @@ CUDA_VISIBLE_DEVICES=5 python train_nlg_llama.py \
     --scale 700 \
     --K 2 \
     --lora_r 16 \
-    --per_device_train_batch_size 1 \
-    --per_device_eval_batch_size 1 \
+    --per_device_train_batch_size 2 \
+    --per_device_eval_batch_size 2 \
     --gradient_accumulation_steps 2 \
-    --logging_steps 200 \
-    --max_steps 40000 \
+    --logging_steps 500 \
+    --max_steps 20000 \
     --warmup_ratio 0.5 \
     --save_strategy epoch \
     --data_seed 42 \

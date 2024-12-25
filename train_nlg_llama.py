@@ -685,8 +685,8 @@ def train():
         **vars(model_args), **vars(data_args), **vars(training_args)
     )
     import src.loramodel
-    src.loramodel.sdpscale = args.scale
-    src.loramodel.sdpK = args.K
+    src.loramodel.Llmm_scale = args.scale
+    src.loramodel.Llmm_K = args.K
     modelname = str(args.model_name_or_path).replace('/','_')
     checkpoint_dir = None
     model, tokenizer = get_accelerate_model(args, checkpoint_dir) 
@@ -782,10 +782,10 @@ def train():
 
     perplexity_callback = next(cb for cb in trainer.callback_handler.callbacks if isinstance(cb, PerplexityCallback))
     output_dir = str(training_args.output_dir).replace('/','_')
-    perplexity_callback.plot_perplexities(save_path='./output/perplexity_'+str(args.logging_steps)+'_d_'+args.dataset+'_m_'+modelname+'_lr_'+str(args.learning_rate)+'_dir_'+str(output_dir)+'.png')
-    perplexity_callback.save_perplexities_csv('./output/perplexity_'+str(args.logging_steps)+'_d_'+args.dataset+'_m_'+modelname+'_lr_'+str(args.learning_rate)+'_dir_'+str(output_dir)+'.csv')
+    perplexity_callback.plot_perplexities(save_path=os.path.join(args.output_dir, 'perplexity_'+str(args.logging_steps)+'_d_'+args.dataset+'_m_'+modelname+'_lr_'+str(args.learning_rate)+'_dir_'+str(output_dir)+'.png'))
+    perplexity_callback.save_perplexities_csv(os.path.join(args.output_dir, 'perplexity_'+str(args.logging_steps)+'_d_'+args.dataset+'_m_'+modelname+'_lr_'+str(args.learning_rate)+'_dir_'+str(output_dir)+'.csv'))
     losspd = pd.DataFrame(trainer.state.log_history)
-    losspd.to_csv('./output/l_'+str(args.logging_steps)+'_m_'+modelname+'_d_'+args.dataset+'_lr_'+str(args.learning_rate)+'_dir_'+str(output_dir)+'.csv', index=True) 
+    losspd.to_csv(os.path.join(args.output_dir, 'l_'+str(args.logging_steps)+'_m_'+modelname+'_d_'+args.dataset+'_lr_'+str(args.learning_rate)+'_dir_'+str(output_dir)+'.csv'), index=True) 
 
 
 if __name__ == "__main__":  

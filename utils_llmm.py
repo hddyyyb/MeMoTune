@@ -4,8 +4,8 @@ import random
 from torch import nn
 from utils_qaunt import weight_quant_fn
 import torch.nn.functional as F
-K=None
-llmmscale=None
+Llmm_K=None
+Llmm_scale=None
 
 
 
@@ -50,21 +50,21 @@ class LinearQuantLoRA(nn.Module):
         self.has_svd_adapter = args.loftq
         self.has_lora_adapter = args.qlora
         if self.has_svd_adapter:
-            self.K = K  
-            self.scale = llmmscale         
+            self.K = Llmm_K  
+            self.scale = Llmm_scale         
             self.number_of_weightsright = in_feature * reduced_rank
-            self.shape_wright = (K, reduced_rank, in_feature)
+            self.shape_wright = (Llmm_K, reduced_rank, in_feature)
             self.shape_sum_wright = (reduced_rank, in_feature)
             self.right_M = nn.Parameter(torch.zeros((self.shape_sum_wright)), requires_grad=True) 
             self.right_Z = nn.Parameter(torch.zeros((self.shape_wright)), requires_grad=True)
-            self.sampleright  = nn.Parameter(torch.zeros((1, K)), requires_grad=False)
+            self.sampleright  = nn.Parameter(torch.zeros((1, Llmm_K)), requires_grad=False)
             torch.nn.init.xavier_normal_(self.sampleright)
             self.number_of_weightsleft = reduced_rank * out_feature
-            self.shape_wleft = (K,  out_feature, reduced_rank)
+            self.shape_wleft = (Llmm_K,  out_feature, reduced_rank)
             self.shape_sum_wleft = (out_feature, reduced_rank)
             self.left_M = nn.Parameter(torch.zeros((self.shape_sum_wleft)), requires_grad=True)  
             self.left_Z  = nn.Parameter(torch.zeros((self.shape_wleft)), requires_grad=True)
-            self.sampleleft = nn.Parameter(torch.zeros((1, K)), requires_grad=False)
+            self.sampleleft = nn.Parameter(torch.zeros((1, Llmm_K)), requires_grad=False)
             torch.nn.init.xavier_normal_(self.sampleleft)
         if self.has_lora_adapter:
             self.lora_A = nn.Linear(in_feature,reduced_rank, bias=False)
@@ -75,21 +75,16 @@ class LinearQuantLoRA(nn.Module):
 
         if self.has_svd_adapter:
             mright = self.right_M.view(self.number_of_weightsright)
-            zright = self.right_Z.view(self.K, self.number_of_weightsright)
-            # mright.dtype:torch.float16
-            # zright.dtype:torch.float16
-            wright = SDP().apply(mright, zright, self.sampleright, torch.tensor(self.scale), torch.tensor(self.K))
+            zright = self.right_Z.view(self.Llmm_K, self.number_of_weightsright)
+            wright = Llmm().apply(mright, zright, self.sampleright, torch.tensor(self.scale), torch.tensor(self.K))
             real_weightsright = wright.view(self.shape_sum_wright)
             right_output = F.linear(x, real_weightsright)
-            ### ### ###
-            #right_output = self.right(x)
         else:
             right_output = 0
         if self.has_svd_adapter:
-            ### llmm ###
-            mleft = self.left_M.view(self.number_of_weightsleft)  # change shape to n*1 vector
-            zleft = self.left_Z.view(self.K, self.number_of_weightsleft)  # its shape is  k*n
-            wleft = SDP().apply(mleft, zleft, self.sampleleft, torch.tensor(self.scale), torch.tensor(self.K))
+            mleft = self.left_M.view(self.number_of_weightsleft)  
+            zleft = self.left_Z.view(self.K, self.number_of_weightsleft)   
+            wleft = Llmm().apply(mleft, zleft, self.sampleleft, torch.tensor(self.scale), torch.tensor(self.K))
             real_weightsleft = wleft.view(self.shape_sum_wleft)
             LRX = F.linear(right_output, real_weightsleft)
             ### ### ###
@@ -345,19 +340,15 @@ class LinearQuantEmbedding(nn.Embedding, LoRALayer):
 from torch.autograd import Function, Variable
 import numpy as np
 
-class SDP(Function):
+class Llmm(Function):
     @staticmethod
     def forward(ctx, m, z, sample, scale, K, training=True):
         rv = torch.normal(0.0, 1.0/np.sqrt(scale.item()), size=(1, K.item())).cuda()
-        #rv = sample , sumple is really huge!
-        # rv.dtype:torch.float32
-        # z.dtype:torch.float16
         if training== False:
             rv = rv.half
         zz = torch.mm(rv, z)
         w = zz + m
         grad_scaling = np.sqrt(scale)
-        #grad_scaling = torch.tensor(1.0).cuda()
         ctx.save_for_backward(K, sample, rv, grad_scaling)
         
         return w
