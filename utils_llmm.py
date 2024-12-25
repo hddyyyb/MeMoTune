@@ -75,7 +75,7 @@ class LinearQuantLoRA(nn.Module):
 
         if self.has_svd_adapter:
             mright = self.right_M.view(self.number_of_weightsright)
-            zright = self.right_Z.view(self.Llmm_K, self.number_of_weightsright)
+            zright = self.right_Z.view(self.K, self.number_of_weightsright)
             wright = Llmm().apply(mright, zright, self.sampleright, torch.tensor(self.scale), torch.tensor(self.K))
             real_weightsright = wright.view(self.shape_sum_wright)
             right_output = F.linear(x, real_weightsright)
