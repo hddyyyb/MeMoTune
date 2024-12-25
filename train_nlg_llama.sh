@@ -23,7 +23,6 @@ CUDA_VISIBLE_DEVICES=5 python train_nlg_llama.py \
     --data_seed 42 \
     --save_steps 50000 \
     --save_total_limit 1 \
-    --dataloader_shuffle False \
     --evaluation_strategy steps \
     --eval_dataset_size 1024 \
     --max_eval_samples 40000 \
