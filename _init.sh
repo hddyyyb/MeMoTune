@@ -6,7 +6,7 @@ python _init.py \
     --bits 4 \
     --iter 5 \
     --rank 64 \
-    --K 1 \
+    --K 2 \
     --save_dir $SAVE_DIR
  
 # Note:
