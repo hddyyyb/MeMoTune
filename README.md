@@ -1,6 +1,6 @@
  # Llmm Repository
 
-This repository contains the implementation of Llmm, which utilizes LoRA and LoftQ to optimize parameter distributions in the probability measure space, enhancing efficiency and effectiveness in natural language tasks.
+This repository contains the implementation of Llmm, enhancing efficiency and effectiveness in natural language tasks.
 
 ---
 
