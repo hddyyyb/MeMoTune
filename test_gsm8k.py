@@ -270,8 +270,8 @@ if __name__ == "__main__":
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments))
     model_args, data_args = parser.parse_args_into_dataclasses()
     import src.loramodel
-    src.loramodel.Llmm_scale = model_args.scale
-    src.loramodel.Llmm_K = model_args.K
+    src.loramodel.MeMoTune_scale = model_args.scale
+    src.loramodel.MeMoTune_K = model_args.K
     if model_args.ckpt_dir is not None:
         adapter_dir_list = [os.path.join(model_args.ckpt_dir, ckpt_dir) for ckpt_dir in os.listdir(model_args.ckpt_dir)
                             if 'checkpoint-' in ckpt_dir]

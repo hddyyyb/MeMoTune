@@ -574,7 +574,7 @@ def get_accelerate_model(args, checkpoint_dir):
             model = PeftModel.from_pretrained(
                 model,
                 args.model_name_or_path,
-                subfolder="llmm_init",
+                subfolder="MeMoTune_init",
                 is_trainable=True,
             )
     model.print_trainable_parameters()
@@ -685,8 +685,8 @@ def train():
         **vars(model_args), **vars(data_args), **vars(training_args)
     )
     import src.loramodel
-    src.loramodel.Llmm_scale = args.scale
-    src.loramodel.Llmm_K = args.K
+    src.loramodel.MeMoTune_scale = args.scale
+    src.loramodel.MeMoTune_K = args.K
     modelname = str(args.model_name_or_path).replace('/','_')
     checkpoint_dir = None
     model, tokenizer = get_accelerate_model(args, checkpoint_dir) 

@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=5 python train_gsm8k.py \
+CUDA_VISIBLE_DEVICES=1 python train_gsm8k.py \
     --model_name_or_path ../lowbit_file/Llama-2-7b-hf-4bit-64rank \
     --learning_rate 3e-4 \
     --seed 17 \
