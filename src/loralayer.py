@@ -33,7 +33,7 @@ import numpy as np
 from torch.autograd import Function, Variable
 
 
-class Llmm(Function):
+class MeMoTune(Function):
     @staticmethod
     def forward(ctx, m, z, sample, scale, K, training=True):
         rv = torch.normal(0.0, 1.0/np.sqrt(scale.item()), size=(1, K.item())).cuda()
@@ -602,12 +602,12 @@ class Linear(nn.Module, LoraLayer):
 
                 mA = self.lora_A_M[active_adapter].view(self.number_of_weightsA) 
                 zA = self.lora_A_Z[active_adapter].view(self.K, self.number_of_weightsA) 
-                wA = Llmm().apply(mA, zA, self.sampleA[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
+                wA = MeMoTune().apply(mA, zA, self.sampleA[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
                 real_weightsA = wA.view(self.shape_sum_wA)
 
                 mB = self.lora_B_M[active_adapter].view(self.number_of_weightsB)  
                 zB = self.lora_B_Z[active_adapter].view(self.K, self.number_of_weightsB)  
-                wB = Llmm().apply(mB, zB, self.sampleB[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
+                wB = MeMoTune().apply(mB, zB, self.sampleB[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
                 real_weightsB = wB.view(self.shape_sum_wB)
 
                 dropout = self.lora_dropout[active_adapter]

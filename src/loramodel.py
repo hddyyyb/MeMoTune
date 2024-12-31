@@ -11,8 +11,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from __future__ import annotations
-Llmm_scale = None  
-Llmm_K = None
+MeMoTune_scale = None  
+MeMoTune_K = None
 
 import math
 import operator
@@ -139,8 +139,8 @@ class LoraModel(BaseTuner):
     prefix: str = "lora_"
 
     def __init__(self, model, config, adapter_name) -> None:
-        self.K = Llmm_K
-        self.scale = Llmm_scale
+        self.K = MeMoTune_K
+        self.scale = MeMoTune_scale
         super().__init__(model, config, adapter_name)
         
     

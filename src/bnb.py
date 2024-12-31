@@ -20,7 +20,7 @@ from peft.import_utils import is_bnb_4bit_available, is_bnb_available
 from src.tuners_utils import BaseTunerLayer, check_adapters_to_merge
 from peft.utils.integrations import dequantize_bnb_weight
 from peft.utils.other import transpose
-from src.loralayer import LoraLayer, Llmm
+from src.loralayer import LoraLayer, MeMoTune
 import sys
 import torch.nn as nn
 import torch.nn.functional as F
@@ -327,13 +327,13 @@ if is_bnb_4bit_available():
 
                     mA = self.lora_A_M[active_adapter].view(self.number_of_weightsA) 
                     zA = self.lora_A_Z[active_adapter].view(self.K, self.number_of_weightsA) 
-                    wA = Llmm().apply(mA, zA, self.sampleA[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
+                    wA = MeMoTune().apply(mA, zA, self.sampleA[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
                     real_weightsA = wA.view(self.shape_sum_wA)
 
                     mB = self.lora_B_M[active_adapter].view(self.number_of_weightsB) 
                     zB = self.lora_B_Z[active_adapter].view(self.K, self.number_of_weightsB) 
 
-                    wB = Llmm().apply(mB, zB, self.sampleB[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
+                    wB = MeMoTune().apply(mB, zB, self.sampleB[active_adapter], torch.tensor(self.scale), torch.tensor(self.K))
                     real_weightsB = wB.view(self.shape_sum_wB)
 
                     dropout = self.lora_dropout[active_adapter]
