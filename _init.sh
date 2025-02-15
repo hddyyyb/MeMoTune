@@ -1,4 +1,3 @@
-CUDA_VISIBLE_DEVICES=5
 SAVE_DIR="../lowbit_file/"
 python _init.py \
     --model_name_or_path yahma/llama-7b-hf \
